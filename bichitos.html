@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pet Shop Bichitos - Identificación Digital</title>
+    <style>
+        :root {
+            --primary: #e0533c;    /* El naranja Cinnabar enérgico de Opaline */
+            --secondary: #5c6b73;  /* Gris oscuro azulado para destacar la membresía */
+            --dark: #2b2d42;       /* Texto principal legible y elegante */
+            --light: #f4f5f6;      /* Fondo gris claro limpio para descansar la vista */
+            --card-bg: #ffffff;    /* Blanco puro para las tarjetas de contenido */
+            --whatsapp: #25D366;   /* Verde nativo para el botón de llamada/acción */
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--light);
+            color: var(--dark);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 450px;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        header {
+            text-align: center;
+            background: linear-gradient(135deg, var(--secondary), #45525b);
+            color: white;
+            padding: 25px 20px;
+            border-radius: 0 0 25px 25px;
+            width: 100%;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            box-sizing: border-box;
+        }
+
+        header h1 { margin: 0; font-size: 24px; font-weight: 700; letter-spacing: 0.5px; }
+        header p { margin: 6px 0 0 0; opacity: 0.85; font-size: 14px; }
+
+        /* Tarjeta Mascota */
+        .mascota-card {
+            background: white;
+            border-radius: 20px;
+            padding: 20px;
+            margin-top: -20px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+            text-align: center;
+        }
+
+        .badge-socio {
+            background-color: var(--secondary);
+            color: white;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            display: inline-block;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+        }
+
+        .mascota-nombre { font-size: 28px; margin: 5px 0; }
+
+        .datos-contacto {
+            background: #f0f4f8;
+            border-radius: 12px;
+            padding: 15px;
+            margin-top: 15px;
+            font-size: 15px;
+        }
+
+        .btn-contacto {
+            display: inline-block;
+            background-color: #FF634A; /* Tu color coral/tomate exacto */
+            color: #ffffff !important;  /* Letra blanca pura */
+            text-decoration: none;
+            padding: 12px 24px;         /* Un poquito más de aire para el dedo */
+            border-radius: 12px;
+            margin-top: 10px;
+            font-weight: bold;
+            font-size: 16px;
+            box-shadow: 0 4px 10px rgba(255, 99, 74, 0.25); /* Sombra suave de su mismo color */
+            transition: background-color 0.2s;
+        }
+
+
+        /* Secciones Comerciales */
+        .seccion-comercial { margin-top: 25px; }
+        .seccion-comercial h3 {
+            font-size: 18px;
+            border-left: 4px solid var(--primary);
+            padding-left: 10px;
+            margin-bottom: 15px;
+        }
+
+        .promo-box {
+            background: white;
+            border-radius: 15px;
+            padding: 15px;
+            margin-bottom: 15px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        .promo-box:active { transform: scale(0.98); }
+
+        .promo-icon { font-size: 30px; }
+        .promo-text h4 { margin: 0; font-size: 16px; }
+        .promo-text p { margin: 5px 0 0 0; font-size: 13px; color: #78909c; }
+        .arrow-right { margin-left: auto; color: var(--primary); font-weight: bold; font-size: 18px; }
+
+        /* Vistas de Subpáginas (Ocultas por defecto) */
+        .sub-pagina {
+            display: none;
+            background: white;
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+            margin-top: 15px;
+        }
+
+        .btn-volver {
+            background: #cfd8dc;
+            color: var(--dark);
+            border: none;
+            padding: 8px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-bottom: 20px;
+            font-size: 13px;
+        }
+
+        /* Listados de Productos / Servicios */
+        .item-lista {
+            border-bottom: 1px solid #eceff1;
+            padding: 15px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .item-lista:last-child { border-bottom: none; }
+        .item-detalles h5 { margin: 0; font-size: 16px; color: var(--dark); }
+        .item-detalles p { margin: 4px 0 0 0; font-size: 13px; color: #78909c; }
+
+        .btn-solicitar {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 13px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+     <header>
+        <div class="logo-container">
+            <img src="logo_bichitos.png" alt="Pet Shop Bichitos" style="max-width: 240px; width: 100%; height: auto; object-fit: contain;">
+        </div>
+        <p>Cuidando a los que más querés 🐾</p>
+    </header>
+
+    <div class="container">
+
+        <!-- PANTALLA PRINCIPAL DE LA MEDALLA -->
+        <div id="vistaPrincipal">
+            <div class="mascota-card">
+                <div class="badge-socio" id="numSocio">Socio Bichitos Nº ----</div>
+                <h2 class="mascota-nombre" id="nombreMascota">Cargando...</h2>
+                            <!-- Espacio dinámico para la Raza -->
+                <div id="razaMascota" style="font-size: 16px; color: #78909c; font-style: italic; margin-top: -5px; margin-bottom: 10px;">Raza: ---</div>
+
+
+                <div class="datos-contacto">
+                    <p style="margin: 0 0 8px 0; font-weight: 500;">
+                        Si me encontrás perdido, por favor avisale a mi familia o dejame en mi casa:
+                        <span id="direccionMascota" style="display:block; margin-top: 5px; color: var(--primary); font-weight: bold;">Benito Martinez 996, Laprida</span>
+                    </p>
+                    <strong id="nombreDuenio">Dueño: ---</strong><br>
+                    <a href="#" class="btn-contacto" id="btnLlamar">📞 Llamar al Dueño</a>
+                </div>
+            </div>
+
+            <div class="seccion-comercial">
+                <h3>Exclusivo para la comunidad de Bichitos</h3>
+
+                <!-- Acceso a Alimentos -->
+                <div class="promo-box" onclick="navegarA('vistaAlimentos')">
+                    <div class="promo-icon">🍖</div>
+                    <div class="promo-text">
+                        <h4>Ofertas en Alimentos</h4>
+                        <p>Bolsas de 20kg con descuento de socio.</p>
+                    </div>
+                    <div class="arrow-right">➔</div>
+                </div>
+
+                <!-- Acceso a Peluquerías -->
+                <div class="promo-box" onclick="navegarA('vistaPeluqueria')">
+                    <div class="promo-icon">✂️</div>
+                    <div class="promo-text">
+                        <h4>Servicios de Peluquería</h4>
+                        <p>Elegí tu sucursal o veterinaria de confianza.</p>
+                    </div>
+                    <div class="arrow-right">➔</div>
+                </div>
+
+                <!-- Acceso a Juguetes -->
+                <div class="promo-box" onclick="navegarA('vistaJuguetes')">
+                    <div class="promo-icon">🧸</div>
+                    <div class="promo-text">
+                        <h4>Juguetes y Accesorios</h4>
+                        <p>Exclusivos de nuestro local Bichitos.</p>
+                    </div>
+                    <div class="arrow-right">➔</div>
+                </div>
+            </div>
+        </div>
+        <!-- SUB-PÁGINA 1: OFERTAS DE ALIMENTOS -->
+        <div id="vistaAlimentos" class="sub-pagina">
+            <button class="btn-volver" onclick="navegarA('vistaPrincipal')">⬅ Volver</button>
+            <h3>Grandes Bolsas en Oferta (20 Kgs)</h3>
+
+            <div class="item-lista">
+                <div class="item-detalles">
+                    <h5>Valiant x 20 Kgs</h5>
+                    <p>Ideal mantenimiento diario.</p>
+                </div>
+                <button class="btn-solicitar" onclick="solicitarItem('Alimento', 'Valiant x 20 Kgs')">Pedir</button>
+            </div>
+
+            <div class="item-lista">
+                <div class="item-detalles">
+                    <h5>Gaucho x 20 Kgs</h5>
+                    <p>Nutrición reforzada y energía.</p>
+                </div>
+                <button class="btn-solicitar" onclick="solicitarItem('Alimento', 'Gaucho x 20 Kgs')">Pedir</button>
+            </div>
+
+            <div class="item-lista">
+                <div class="item-detalles">
+                    <h5>Smug x 20 Kgs</h5>
+                    <p>Excelente relación calidad-precio.</p>
+                </div>
+                <button class="btn-solicitar" onclick="solicitarItem('Alimento', 'Smug x 20 Kgs')">Pedir</button>
+            </div>
+        </div>
+
+        <!-- SUB-PÁGINA 2: SERVICIOS DE PELUQUERÍA -->
+        <div id="vistaPeluqueria" class="sub-pagina">
+            <button class="btn-volver" onclick="navegarA('vistaPrincipal')">⬅ Volver</button>
+            <h3>Estética y Cuidado Canino</h3>
+            <p style="font-size: 13px; color: #78909c; margin-top: -10px; margin-bottom: 20px;">Elegí el lugar ideal para el turno de tu mascota:</p>
+
+            <div class="item-lista">
+                <div class="item-detalles">
+                    <h5>Pelucan</h5>
+                    <p>Especialistas en cortes de raza.</p>
+                </div>
+                <button class="btn-solicitar" onclick="solicitarItem('Turno', 'Pelucan')">Reservar</button>
+            </div>
+
+            <div class="item-lista">
+                <div class="item-detalles">
+                    <h5>Peluquería Castex</h5>
+                    <p>Atención personalizada y baños terapéuticos.</p>
+                </div>
+                <button class="btn-solicitar" onclick="solicitarItem('Turno', 'Peluquería Castex')">Reservar</button>
+            </div>
+
+            <div class="item-lista">
+                <div class="item-detalles">
+                    <h5>Veterinaria Etcheverria</h5>
+                    <p>Cuidado estético con supervisión médica.</p>
+                </div>
+                <button class="btn-solicitar" onclick="solicitarItem('Turno', 'Veterinaria Etcheverria')">Reservar</button>
+            </div>
+        </div>
+        <!-- SUB-PÁGINA 3: JUGUETES Y ACCESORIOS -->
+        <div id="vistaJuguetes" class="sub-pagina">
+            <button class="btn-volver" onclick="navegarA('vistaPrincipal')">⬅ Volver</button>
+            <h3>Catálogo de Bichitos</h3>
+
+            <div class="item-lista">
+                <div class="item-detalles">
+                    <h5>Mordillos y Juguetes de Goma</h5>
+                    <p>Para la ansiedad y juego fuerte.</p>
+                </div>
+                <button class="btn-solicitar" onclick="solicitarItem('Catalogo', 'Mordillos de Goma')">Ver</button>
+            </div>
+
+            <div class="item-lista">
+                <div class="item-detalles">
+                    <h5>Pretales y Correas Reforzadas</h5>
+                    <p>Seguridad y estilo para el paseo.</p>
+                </div>
+                <button class="btn-solicitar" onclick="solicitarItem('Catalogo', 'Pretales y Correas')">Ver</button>
+            </div>
+        </div>
+
+    </div> <!-- Cierre del container -->
+
+    <script>
+        // Lógica para alternar las pantallas ocultando y mostrando los DIVs
+        function navegarA(idVista) {
+            document.getElementById('vistaPrincipal').style.display = 'none';
+            document.getElementById('vistaAlimentos').style.display = 'none';
+            document.getElementById('vistaPeluqueria').style.display = 'none';
+            document.getElementById('vistaJuguetes').style.display = 'none';
+
+            document.getElementById(idVista).style.display = 'block';
+            window.scrollTo(0, 0); // Vuelve arriba de la pantalla al cambiar de sección
+        }
+        // Función que lee los datos que vienen grabados en el NFC
+        function cargarDatosMascota() {
+            const urlParams = new URLSearchParams(window.location.search);
+
+            // Valores por defecto para pruebas si entramos directo al archivo
+            const socio = urlParams.get('socio') || '1047';
+            const nombre = urlParams.get('nombre') || 'Rocco';
+            const raza = urlParams.get('raza') || 'Ovejero Alemán';
+            const duenio = urlParams.get('duenio') || 'Juan Pérez';
+            const telefono = urlParams.get('tel') || '5491122334455';
+            const direccion = urlParams.get('dir') || 'Benito Martinez 996, Laprida';
+
+            // Inyectar la información en la pantalla de la medalla
+            document.getElementById('numSocio').innerText = `Socio Bichitos Nº ${socio}`;
+            document.getElementById('nombreMascota').innerText = `¡Hola, soy ${nombre}! 🐶`;
+            document.getElementById('razaMascota').innerText = `Raza: ${raza}`;
+            document.getElementById('nombreDuenio').innerText = `Familiares: ${duenio}`;
+            document.getElementById('direccionMascota').innerText = direccion;
+
+            // Configurar el botón de llamada telefónica directa
+            const btnLlamar = document.getElementById('btnLlamar');
+            btnLlamar.href = `tel:${telefono}`;
+
+            // Guardar variables en memoria para los mensajes de compra
+            window.mascotaActual = nombre;
+            window.socioActual = socio;
+        }
+
+        // Armador del mensaje hacia el WhatsApp de Bichitos
+        function solicitarItem(tipo, detalleEspecifico) {
+            const telefonoPetShop = "5491100000000"; // Reemplazar por el número de WhatsApp del local
+            let mensaje = "";
+
+            if(tipo === 'Alimento') {
+                mensaje = `Hola Bichitos! Soy el dueño del socio Nº ${window.socioActual} (${window.mascotaActual}). Quiero encargar una bolsa de: ${detalleEspecifico} aprovechando el descuento de socio.`;
+            } else if(tipo === 'Turno') {
+                mensaje = `Hola Bichitos! Me gustaría coordinar un turno de peluquería para mi mascota socio Nº ${window.socioActual} (${window.mascotaActual}) para llevarlo a: ${detalleEspecifico}.`;
+            } else if(tipo === 'Catalogo') {
+                mensaje = `Hola Bichitos! Soy el socio Nº ${window.socioActual} (${window.mascotaActual}) y me interesaría consultar precios o modelos disponibles de: ${detalleEspecifico}.`;
+            }
+
+            // Redirección directa a la API de WhatsApp
+            const whatsappUrl = `https://wa.me{telefonoPetShop}?text=${encodeURIComponent(mensaje)}`;
+            window.open(whatsappUrl, '_blank');
+        }
+
+        // Arrancar la lectura al cargar la página
+        window.onload = cargarDatosMascota;
+    </script>
+</body>
+</html>
